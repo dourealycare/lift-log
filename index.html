@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101114">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Lift Log</title>
+<style>
+:root{color-scheme:dark;--bg:#101114;--panel:#191b20;--panel2:#22252c;--line:#30343d;--muted:#9da3af;--text:#f4f5f7;--accent:#b7f36b;--danger:#ff7777}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif;padding-bottom:88px}
+header{padding:22px 18px 12px;max-width:760px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:23px;font-weight:800;letter-spacing:-.7px}.brand span{color:var(--accent)}.sub{color:var(--muted);font-size:12px;margin-top:3px}
+main{max-width:760px;margin:auto;padding:8px 16px 28px}.screen{display:none}.screen.active{display:block}
+h1{font-size:27px;letter-spacing:-.8px;margin:12px 0 4px}h2{font-size:18px;margin:0 0 12px}
+.muted{color:var(--muted)}.small{font-size:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:18px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:13px}.stat strong{display:block;font-size:24px}.stat span{font-size:11px;color:var(--muted)}
+button,input,select{font:inherit}button{border:0;border-radius:12px;padding:12px 15px;background:var(--accent);color:#151912;font-weight:750;cursor:pointer}button.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}button.ghost{background:transparent;color:var(--muted);padding:8px}button.danger{background:#452629;color:#ffb4b4}.full{width:100%}
+input,select{width:100%;background:#111318;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:12px;outline:none;min-width:0}label{display:block;color:var(--muted);font-size:12px;margin:10px 0 6px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#15171c;border-top:1px solid var(--line);display:flex;justify-content:center;padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom));z-index:5}
+nav button{flex:1;max-width:150px;background:transparent;color:var(--muted);padding:9px 4px;font-size:11px}nav button.active{color:var(--accent);background:#252a20}
+nav .ico{display:block;font-size:18px;margin-bottom:2px}
+.exercise{border:1px solid var(--line);background:#14161b;border-radius:14px;padding:13px;margin:10px 0}.setrow{display:grid;grid-template-columns:28px 1fr 1fr 34px;gap:7px;align-items:center;margin-top:8px}.setrow input{padding:9px;text-align:center}.setrow .num{color:var(--muted);text-align:center}.setrow button{padding:8px;background:#26301e;color:var(--accent)}
+.pill{border:1px solid var(--line);border-radius:99px;padding:5px 9px;color:var(--muted);font-size:11px}
+.listitem{padding:13px 0;border-bottom:1px solid var(--line)}.listitem:last-child{border:0}
+.barwrap{height:9px;background:#2b2e35;border-radius:99px;overflow:hidden;margin-top:8px}.bar{height:100%;background:var(--accent);border-radius:99px}
+.empty{text-align:center;padding:30px 12px;color:var(--muted)}.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#e7f7d3;color:#17200f;padding:10px 16px;border-radius:99px;font-weight:700;display:none;z-index:10}
+@media(min-width:600px){main{padding-left:24px;padding-right:24px}.stats{gap:14px}.card{padding:20px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">LIFT<span>LOG</span></div><div class="sub">Your training, your progress.</div></div><span class="pill" id="today"></span></header>
+<main>
+<section id="home" class="screen active">
+<h1>Ready to train?</h1><div class="muted">Keep it simple. Keep getting stronger.</div>
+<div class="stats"><div class="stat"><strong id="weekCount">0</strong><span>SESSIONS THIS WEEK</span></div><div class="stat"><strong id="totalCount">0</strong><span>TOTAL SESSIONS</span></div><div class="stat"><strong id="exerciseCount">0</strong><span>EXERCISES LOGGED</span></div></div>
+<button class="full" onclick="newWorkout()">＋ Start workout</button>
+<div class="card"><div class="row"><h2>Recent sessions</h2><button class="ghost" onclick="show('history')">See all →</button></div><div id="recent"></div></div>
+<div class="card"><div class="row"><h2>Workout templates</h2><button class="ghost" onclick="show('templates')">Manage →</button></div><div id="homeTemplates"></div></div>
+</section>
+
+<section id="workout" class="screen">
+<div class="row"><div><h1 id="workoutTitle">New workout</h1><div class="muted small" id="workoutDate"></div></div><button class="secondary" onclick="show('home')">Exit</button></div>
+<div class="card"><label>Workout name</label><input id="sessionName" placeholder="e.g. Push day"></div>
+<div id="exerciseList"></div>
+<div class="grid2"><button class="secondary" onclick="addExercise()">＋ Add exercise</button><button class="secondary" onclick="addFromTemplate()">Use template</button></div>
+<div style="height:14px"></div><button class="full" onclick="saveWorkout()">Save workout</button>
+</section>
+
+<section id="history" class="screen">
+<h1>Workout history</h1><div class="muted">Every session, all in one place.</div><div id="historyList" class="card"></div>
+</section>
+
+<section id="progress" class="screen">
+<h1>Your progress</h1><div class="muted">Track the weights you're moving over time.</div>
+<div class="card"><label>Choose exercise</label><select id="progressExercise" onchange="renderProgress()"></select><div id="progressContent"></div></div>
+<div class="card"><h2>Training volume</h2><div class="muted small">Total weight × reps across logged sets, by session.</div><div id="volumeContent"></div></div>
+</section>
+
+<section id="templates" class="screen">
+<h1>Workout templates</h1><div class="muted">Save routines you repeat often.</div>
+<div class="card"><label>Template name</label><input id="templateName" placeholder="e.g. Upper body"><label>Exercises (comma separated)</label><input id="templateExercises" placeholder="Bench press, Row, Shoulder press"><button class="full" style="margin-top:12px" onclick="saveTemplate()">Save template</button></div>
+<div id="templateList" class="card"></div>
+</section>
+</main>
+<nav>
+<button class="active" data-screen="home" onclick="show('home')"><span class="ico">⌂</span>Home</button>
+<button data-screen="history" onclick="show('history')"><span class="ico">◷</span>History</button>
+<button data-screen="progress" onclick="show('progress')"><span class="ico">↗</span>Progress</button>
+<button data-screen="templates" onclick="show('templates')"><span class="ico">▤</span>Templates</button>
+</nav>
+<div class="toast" id="toast"></div>
+<script>
+const KEY='liftlog-v1';let db=JSON.parse(localStorage.getItem(KEY)||'{"workouts":[],"templates":[]}');let current=null;
+const $=id=>document.getElementById(id);
+const today=new Date();$('today').textContent=today.toLocaleDateString(undefined,{month:'short',day:'numeric'});
+function persist(){localStorage.setItem(KEY,JSON.stringify(db))}
+function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1800)}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.screen===id));if(id==='home')renderHome();if(id==='history')renderHistory();if(id==='progress')renderProgress();if(id==='templates')renderTemplates();window.scrollTo(0,0)}
+function newWorkout(){current={id:Date.now(),date:new Date().toISOString(),name:'',exercises:[]};$('sessionName').value='';$('workoutDate').textContent=new Date().toLocaleString();$('workoutTitle').textContent='New workout';$('exerciseList').innerHTML='';addExercise();show('workout')}
+function addExercise(name=''){if(!current)return;let ex={name,sets:[{weight:'',reps:''}]};current.exercises.push(ex);renderExercises()}
+function renderExercises(){$('exerciseList').innerHTML='';current.exercises.forEach((ex,i)=>{let el=document.createElement('div');el.className='exercise';el.innerHTML=`<div class="row"><strong>Exercise ${i+1}</strong><button class="ghost" onclick="removeExercise(${i})">Remove</button></div><label>Exercise name</label><input placeholder="e.g. Bench press" value="${esc(ex.name)}" oninput="current.exercises[${i}].name=this.value"><div class="setrows"></div><button class="secondary full" style="margin-top:10px" onclick="addSet(${i})">＋ Add set</button>`;let rows=el.querySelector('.setrows');ex.sets.forEach((s,j)=>{let r=document.createElement('div');r.className='setrow';r.innerHTML=`<span class="num">${j+1}</span><input type="number" min="0" step="0.5" placeholder="kg" value="${s.weight}" aria-label="Weight in kg"><input type="number" min="0" placeholder="reps" value="${s.reps}" aria-label="Reps"><button title="Remove set">×</button>`;r.children[1].oninput=e=>s.weight=e.target.value;r.children[2].oninput=e=>s.reps=e.target.value;r.children[3].onclick=()=>{ex.sets.splice(j,1);if(!ex.sets.length)ex.sets.push({weight:'',reps:''});renderExercises()};rows.appendChild(r) });$('exerciseList').appendChild(el)})}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function addSet(i){current.exercises[i].sets.push({weight:'',reps:''});renderExercises()}
+function removeExercise(i){current.exercises.splice(i,1);renderExercises()}
+function addFromTemplate(){if(!db.templates.length){toast('Create a template first');return}let names=db.templates[0].exercises;names.forEach(n=>addExercise(n))}
+function saveWorkout(){current.name=$('sessionName').value.trim()||'Workout';current.exercises=current.exercises.filter(e=>e.name.trim()).map(e=>({...e,sets:e.sets.filter(s=>s.reps!==''||s.weight!=='').map(s=>({weight:Number(s.weight)||0,reps:Number(s.reps)||0}))})).filter(e=>e.sets.length);if(!current.exercises.length){toast('Add at least one exercise and set');return}db.workouts.unshift(current);persist();current=null;toast('Workout saved');show('home')}
+function renderHome(){let wk=new Date();wk.setDate(wk.getDate()-7);$('weekCount').textContent=db.workouts.filter(w=>new Date(w.date)>=wk).length;$('totalCount').textContent=db.workouts.length;$('exerciseCount').textContent=db.workouts.reduce((a,w)=>a+w.exercises.length,0);$('recent').innerHTML=db.workouts.slice(0,3).map(w=>`<div class="listitem"><div class="row"><strong>${esc(w.name)}</strong><span class="pill">${new Date(w.date).toLocaleDateString()}</span></div><div class="muted small">${w.exercises.map(e=>esc(e.name)).join(' · ')}</div></div>`).join('')||'<div class="empty">No workouts yet. Your first session starts here.</div>';$('homeTemplates').innerHTML=db.templates.slice(0,2).map(t=>`<div class="listitem"><strong>${esc(t.name)}</strong><div class="muted small">${t.exercises.map(esc).join(' · ')}</div></div>`).join('')||'<div class="muted small">Save a routine to get started.</div>'}
+function renderHistory(){$('historyList').innerHTML=db.workouts.map((w,i)=>`<div class="listitem"><div class="row"><strong>${esc(w.name)}</strong><button class="ghost" onclick="deleteWorkout(${i})">Delete</button></div><div class="muted small">${new Date(w.date).toLocaleString()} · ${w.exercises.length} exercises</div>${w.exercises.map(e=>`<div style="margin-top:9px"><strong>${esc(e.name)}</strong><div class="muted small">${e.sets.map(s=>`${s.weight} kg × ${s.reps}`).join('　·　')}</div></div>`).join('')}</div>`).join('')||'<div class="empty">Your saved workouts will appear here.</div>'}
+function deleteWorkout(i){if(confirm('Delete this workout?')){db.workouts.splice(i,1);persist();renderHistory();renderHome()}}
+function saveTemplate(){let name=$('templateName').value.trim(),exercises=$('templateExercises').value.split(',').map(s=>s.trim()).filter(Boolean);if(!name||!exercises.length){toast('Add a name and at least one exercise');return}db.templates.push({id:Date.now(),name,exercises});persist();$('templateName').value='';$('templateExercises').value='';renderTemplates();toast('Template saved')}
+function renderTemplates(){$('templateList').innerHTML=db.templates.map((t,i)=>`<div class="listitem"><div class="row"><strong>${esc(t.name)}</strong><button class="ghost" onclick="deleteTemplate(${i})">Delete</button></div><div class="muted small">${t.exercises.map(esc).join(' · ')}</div><button class="secondary" style="margin-top:10px" onclick="startTemplate(${i})">Start this workout</button></div>`).join('')||'<div class="empty">No templates yet. Create your first routine above.</div>'}
+function deleteTemplate(i){db.templates.splice(i,1);persist();renderTemplates()}
+function startTemplate(i){newWorkout();$('sessionName').value=db.templates[i].name;current.exercises=[];db.templates[i].exercises.forEach(n=>addExercise(n));}
+function renderProgress(){let names=[...new Set(db.workouts.flatMap(w=>w.exercises.map(e=>e.name)))];let sel=$('progressExercise'),old=sel.value;sel.innerHTML=names.map(n=>`<option>${esc(n)}</option>`).join('');if(old&&names.includes(old))sel.value=old;let name=sel.value,records=[];db.workouts.slice().reverse().forEach(w=>w.exercises.filter(e=>e.name===name).forEach(e=>e.sets.forEach(s=>records.push({date:new Date(w.date),weight:s.weight,reps:s.reps}))));$('progressContent').innerHTML=records.length?`<div class="stats"><div class="stat"><strong>${Math.max(...records.map(r=>r.weight))}</strong><span>BEST KG</span></div><div class="stat"><strong>${records[records.length-1].weight}</strong><span>LATEST KG</span></div><div class="stat"><strong>${Math.max(...records.map(r=>r.reps))}</strong><span>MAX REPS</span></div></div>`:'<div class="empty">Log an exercise to see its progress.</div>';let vols=db.workouts.slice(-8).map(w=>({name:new Date(w.date).toLocaleDateString(undefined,{month:'short',day:'numeric'}),v:w.exercises.reduce((a,e)=>a+e.sets.reduce((b,s)=>b+s.weight*s.reps,0),0)}));let max=Math.max(1,...vols.map(x=>x.v));$('volumeContent').innerHTML=vols.map(x=>`<div style="margin:13px 0"><div class="row small"><span>${x.name}</span><span>${Math.round(x.v).toLocaleString()} kg·reps</span></div><div class="barwrap"><div class="bar" style="width:${x.v/max*100}%"></div></div></div>`).join('')||'<div class="empty">Save workouts to see training volume.</div>'}
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+renderHome();
+</script>
+</body></html>

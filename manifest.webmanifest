@@ -1,0 +1,9 @@
+{
+  "name": "Lift Log - Personal Workout Tracker",
+  "short_name": "Lift Log",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#101114",
+  "theme_color": "#101114",
+  "description": "A simple offline workout tracker."
+}
