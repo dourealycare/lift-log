@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#101114">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Lift Log</title>
 <style>
-:root{color-scheme:dark;--bg:#101114;--panel:#191b20;--panel2:#22252c;--line:#30343d;--muted:#9da3af;--text:#f4f5f7;--accent:#b7f36b;--danger:#ff7777}
+:root{color-scheme:dark;--bg:#101114;--panel:#191b20;--panel2:#22252c;--line:#30343d;--muted:#9da3af;--text:#f4f5f7;--accent:#b7f36b;--blue:#4da3ff;--danger:#ff7777}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif;padding-bottom:88px}
 header{padding:22px 18px 12px;max-width:760px;margin:auto;display:flex;align-items:center;justify-content:space-between}
 .brand{font-size:23px;font-weight:800;letter-spacing:-.7px}.brand span{color:var(--accent)}.sub{color:var(--muted);font-size:12px;margin-top:3px}
@@ -15,16 +17,20 @@ main{max-width:760px;margin:auto;padding:8px 16px 28px}.screen{display:none}.scr
 h1{font-size:27px;letter-spacing:-.8px;margin:12px 0 4px}h2{font-size:18px;margin:0 0 12px}
 .muted{color:var(--muted)}.small{font-size:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:18px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:13px}.stat strong{display:block;font-size:24px}.stat span{font-size:11px;color:var(--muted)}
-button,input,select{font:inherit}button{border:0;border-radius:12px;padding:12px 15px;background:var(--accent);color:#151912;font-weight:750;cursor:pointer}button.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}button.ghost{background:transparent;color:var(--muted);padding:8px}button.danger{background:#452629;color:#ffb4b4}.full{width:100%}
+button,input,select{font:inherit}button{border:0;border-radius:12px;padding:12px 15px;background:var(--accent);color:#151912;font-weight:750;cursor:pointer}button.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}button.blue{background:var(--blue);color:#06121f}button.ghost{background:transparent;color:var(--muted);padding:8px}button.danger{background:#452629;color:#ffb4b4}.full{width:100%}
 input,select{width:100%;background:#111318;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:12px;outline:none;min-width:0}label{display:block;color:var(--muted);font-size:12px;margin:10px 0 6px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 nav{position:fixed;bottom:0;left:0;right:0;background:#15171c;border-top:1px solid var(--line);display:flex;justify-content:center;padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom));z-index:5}
 nav button{flex:1;max-width:150px;background:transparent;color:var(--muted);padding:9px 4px;font-size:11px}nav button.active{color:var(--accent);background:#252a20}
 nav .ico{display:block;font-size:18px;margin-bottom:2px}
 .exercise{border:1px solid var(--line);background:#14161b;border-radius:14px;padding:13px;margin:10px 0}.setrow{display:grid;grid-template-columns:28px 1fr 1fr 34px;gap:7px;align-items:center;margin-top:8px}.setrow input{padding:9px;text-align:center}.setrow .num{color:var(--muted);text-align:center}.setrow button{padding:8px;background:#26301e;color:var(--accent)}
-.pill{border:1px solid var(--line);border-radius:99px;padding:5px 9px;color:var(--muted);font-size:11px}
+.hint{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#1b2230;border:1px solid #2a3850;color:#a9c8f2;border-radius:10px;padding:8px 10px;margin-top:10px;font-size:12px}.hint button{padding:6px 10px;font-size:12px;background:var(--blue);color:#06121f;flex:none}
+.pill{border:1px solid var(--line);border-radius:99px;padding:5px 9px;color:var(--muted);font-size:11px;white-space:nowrap}
 .listitem{padding:13px 0;border-bottom:1px solid var(--line)}.listitem:last-child{border:0}
 .barwrap{height:9px;background:#2b2e35;border-radius:99px;overflow:hidden;margin-top:8px}.bar{height:100%;background:var(--accent);border-radius:99px}
-.empty{text-align:center;padding:30px 12px;color:var(--muted)}.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#e7f7d3;color:#17200f;padding:10px 16px;border-radius:99px;font-weight:700;display:none;z-index:10}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0}.chip{white-space:nowrap;background:var(--panel2);color:var(--muted);border:1px solid var(--line);padding:6px 11px;border-radius:99px;font-size:12px;font-weight:600}.chip.on{background:var(--blue);color:#06121f;border-color:var(--blue)}
+.pick{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;background:transparent;color:var(--text);border-radius:0;border-bottom:1px solid var(--line);padding:13px 2px;font-weight:600;text-align:left}
+.sheet{position:fixed;inset:0;background:#000b;display:none;z-index:20;align-items:flex-end;justify-content:center}.sheet.open{display:flex}.sheetin{background:var(--panel);width:100%;max-width:760px;max-height:85vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+.empty{text-align:center;padding:30px 12px;color:var(--muted)}.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#e7f7d3;color:#17200f;padding:10px 16px;border-radius:99px;font-weight:700;display:none;z-index:30}
 @media(min-width:600px){main{padding-left:24px;padding-right:24px}.stats{gap:14px}.card{padding:20px}}
 </style>
 </head>
@@ -35,15 +41,18 @@ nav .ico{display:block;font-size:18px;margin-bottom:2px}
 <h1>Ready to train?</h1><div class="muted">Keep it simple. Keep getting stronger.</div>
 <div class="stats"><div class="stat"><strong id="weekCount">0</strong><span>SESSIONS THIS WEEK</span></div><div class="stat"><strong id="totalCount">0</strong><span>TOTAL SESSIONS</span></div><div class="stat"><strong id="exerciseCount">0</strong><span>EXERCISES LOGGED</span></div></div>
 <button class="full" onclick="newWorkout()">＋ Start workout</button>
+<button class="secondary full" id="repeatBtn" style="margin-top:10px" onclick="duplicate(0)">⧉ Repeat last workout</button>
 <div class="card"><div class="row"><h2>Recent sessions</h2><button class="ghost" onclick="show('history')">See all →</button></div><div id="recent"></div></div>
 <div class="card"><div class="row"><h2>Workout templates</h2><button class="ghost" onclick="show('templates')">Manage →</button></div><div id="homeTemplates"></div></div>
+<div class="card"><h2>Backup &amp; restore</h2><div class="muted small" id="backupInfo"></div><div class="grid2" style="margin-top:12px"><button class="secondary" onclick="backup()">Download backup</button><button class="secondary" onclick="$('restoreFile').click()">Restore backup</button></div><input type="file" id="restoreFile" accept=".json,application/json" hidden onchange="restore(this.files[0])"></div>
 </section>
 
 <section id="workout" class="screen">
-<div class="row"><div><h1 id="workoutTitle">New workout</h1><div class="muted small" id="workoutDate"></div></div><button class="secondary" onclick="show('home')">Exit</button></div>
+<div class="row"><div><h1 id="workoutTitle">New workout</h1><div class="muted small" id="workoutDate"></div></div><button class="secondary" onclick="exitWorkout()">Exit</button></div>
 <div class="card"><label>Workout name</label><input id="sessionName" placeholder="e.g. Push day"></div>
 <div id="exerciseList"></div>
-<div class="grid2"><button class="secondary" onclick="addExercise()">＋ Add exercise</button><button class="secondary" onclick="addFromTemplate()">Use template</button></div>
+<button class="blue full" onclick="openPicker('ex')">＋ Add exercise</button>
+<button class="secondary full" style="margin-top:10px" onclick="addFromTemplate()">Use template</button>
 <div style="height:14px"></div><button class="full" onclick="saveWorkout()">Save workout</button>
 </section>
 
@@ -54,45 +63,156 @@ nav .ico{display:block;font-size:18px;margin-bottom:2px}
 <section id="progress" class="screen">
 <h1>Your progress</h1><div class="muted">Track the weights you're moving over time.</div>
 <div class="card"><label>Choose exercise</label><select id="progressExercise" onchange="renderProgress()"></select><div id="progressContent"></div></div>
-<div class="card"><h2>Training volume</h2><div class="muted small">Total weight × reps across logged sets, by session.</div><div id="volumeContent"></div></div>
+<div class="card"><div class="row"><h2>Volume by muscle group</h2><select id="volRange" style="width:auto" onchange="renderVolume()"><option value="7">7 days</option><option value="30" selected>30 days</option><option value="90">90 days</option><option value="0">All time</option></select></div><div class="muted small">Weight × reps for each exercise's primary muscle.</div><div id="volumeContent"></div></div>
+</section>
+
+<section id="library" class="screen">
+<h1>Exercise library</h1><div class="muted">Search the built-in list or add your own.</div>
+<div class="card"><label>Custom exercise</label><div class="grid2"><input id="cName" placeholder="e.g. Cable row"><select id="cMuscle"></select></div><button class="full" style="margin-top:12px" onclick="saveCustom()">Save exercise</button></div>
+<input id="lq" type="search" placeholder="Search library" oninput="renderLibrary()"><div id="lchips" class="chips"></div><div id="libList" class="card"></div>
 </section>
 
 <section id="templates" class="screen">
 <h1>Workout templates</h1><div class="muted">Save routines you repeat often.</div>
-<div class="card"><label>Template name</label><input id="templateName" placeholder="e.g. Upper body"><label>Exercises (comma separated)</label><input id="templateExercises" placeholder="Bench press, Row, Shoulder press"><button class="full" style="margin-top:12px" onclick="saveTemplate()">Save template</button></div>
+<div class="card"><label>Template name</label><input id="templateName" placeholder="e.g. Upper body"><label>Exercises (comma separated)</label><input id="templateExercises" placeholder="Bench press, Barbell row, Overhead press"><button class="full" style="margin-top:12px" onclick="saveTemplate()">Save template</button></div>
 <div id="templateList" class="card"></div>
 </section>
 </main>
+
+<div class="sheet" id="picker" onclick="if(event.target===this)closePicker()"><div class="sheetin">
+<div class="row"><h2 id="ptitle">Add exercise</h2><button class="ghost" onclick="closePicker()">Close</button></div>
+<input id="pq" type="search" placeholder="Search exercises" oninput="renderPicker()"><div id="pchips" class="chips"></div><div id="plist"></div>
+</div></div>
+
 <nav>
 <button class="active" data-screen="home" onclick="show('home')"><span class="ico">⌂</span>Home</button>
 <button data-screen="history" onclick="show('history')"><span class="ico">◷</span>History</button>
 <button data-screen="progress" onclick="show('progress')"><span class="ico">↗</span>Progress</button>
+<button data-screen="library" onclick="show('library')"><span class="ico">☰</span>Library</button>
 <button data-screen="templates" onclick="show('templates')"><span class="ico">▤</span>Templates</button>
 </nav>
 <div class="toast" id="toast"></div>
 <script>
-const KEY='liftlog-v1';let db=JSON.parse(localStorage.getItem(KEY)||'{"workouts":[],"templates":[]}');let current=null;
-const $=id=>document.getElementById(id);
-const today=new Date();$('today').textContent=today.toLocaleDateString(undefined,{month:'short',day:'numeric'});
-function persist(){localStorage.setItem(KEY,JSON.stringify(db))}
-function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1800)}
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.screen===id));if(id==='home')renderHome();if(id==='history')renderHistory();if(id==='progress')renderProgress();if(id==='templates')renderTemplates();window.scrollTo(0,0)}
-function newWorkout(){current={id:Date.now(),date:new Date().toISOString(),name:'',exercises:[]};$('sessionName').value='';$('workoutDate').textContent=new Date().toLocaleString();$('workoutTitle').textContent='New workout';$('exerciseList').innerHTML='';addExercise();show('workout')}
-function addExercise(name=''){if(!current)return;let ex={name,sets:[{weight:'',reps:''}]};current.exercises.push(ex);renderExercises()}
-function renderExercises(){$('exerciseList').innerHTML='';current.exercises.forEach((ex,i)=>{let el=document.createElement('div');el.className='exercise';el.innerHTML=`<div class="row"><strong>Exercise ${i+1}</strong><button class="ghost" onclick="removeExercise(${i})">Remove</button></div><label>Exercise name</label><input placeholder="e.g. Bench press" value="${esc(ex.name)}" oninput="current.exercises[${i}].name=this.value"><div class="setrows"></div><button class="secondary full" style="margin-top:10px" onclick="addSet(${i})">＋ Add set</button>`;let rows=el.querySelector('.setrows');ex.sets.forEach((s,j)=>{let r=document.createElement('div');r.className='setrow';r.innerHTML=`<span class="num">${j+1}</span><input type="number" min="0" step="0.5" placeholder="kg" value="${s.weight}" aria-label="Weight in kg"><input type="number" min="0" placeholder="reps" value="${s.reps}" aria-label="Reps"><button title="Remove set">×</button>`;r.children[1].oninput=e=>s.weight=e.target.value;r.children[2].oninput=e=>s.reps=e.target.value;r.children[3].onclick=()=>{ex.sets.splice(j,1);if(!ex.sets.length)ex.sets.push({weight:'',reps:''});renderExercises()};rows.appendChild(r) });$('exerciseList').appendChild(el)})}
-function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function addSet(i){current.exercises[i].sets.push({weight:'',reps:''});renderExercises()}
-function removeExercise(i){current.exercises.splice(i,1);renderExercises()}
-function addFromTemplate(){if(!db.templates.length){toast('Create a template first');return}let names=db.templates[0].exercises;names.forEach(n=>addExercise(n))}
-function saveWorkout(){current.name=$('sessionName').value.trim()||'Workout';current.exercises=current.exercises.filter(e=>e.name.trim()).map(e=>({...e,sets:e.sets.filter(s=>s.reps!==''||s.weight!=='').map(s=>({weight:Number(s.weight)||0,reps:Number(s.reps)||0}))})).filter(e=>e.sets.length);if(!current.exercises.length){toast('Add at least one exercise and set');return}db.workouts.unshift(current);persist();current=null;toast('Workout saved');show('home')}
-function renderHome(){let wk=new Date();wk.setDate(wk.getDate()-7);$('weekCount').textContent=db.workouts.filter(w=>new Date(w.date)>=wk).length;$('totalCount').textContent=db.workouts.length;$('exerciseCount').textContent=db.workouts.reduce((a,w)=>a+w.exercises.length,0);$('recent').innerHTML=db.workouts.slice(0,3).map(w=>`<div class="listitem"><div class="row"><strong>${esc(w.name)}</strong><span class="pill">${new Date(w.date).toLocaleDateString()}</span></div><div class="muted small">${w.exercises.map(e=>esc(e.name)).join(' · ')}</div></div>`).join('')||'<div class="empty">No workouts yet. Your first session starts here.</div>';$('homeTemplates').innerHTML=db.templates.slice(0,2).map(t=>`<div class="listitem"><strong>${esc(t.name)}</strong><div class="muted small">${t.exercises.map(esc).join(' · ')}</div></div>`).join('')||'<div class="muted small">Save a routine to get started.</div>'}
-function renderHistory(){$('historyList').innerHTML=db.workouts.map((w,i)=>`<div class="listitem"><div class="row"><strong>${esc(w.name)}</strong><button class="ghost" onclick="deleteWorkout(${i})">Delete</button></div><div class="muted small">${new Date(w.date).toLocaleString()} · ${w.exercises.length} exercises</div>${w.exercises.map(e=>`<div style="margin-top:9px"><strong>${esc(e.name)}</strong><div class="muted small">${e.sets.map(s=>`${s.weight} kg × ${s.reps}`).join('　·　')}</div></div>`).join('')}</div>`).join('')||'<div class="empty">Your saved workouts will appear here.</div>'}
+const KEY='liftlog-v1'; // same key as v1 so existing data carries over
+const LIB={Chest:['Bench press','Incline bench press','Dumbbell bench press','Incline dumbbell press','Machine chest press','Chest fly','Cable crossover','Push-up'],
+Back:['Deadlift','Pull-up','Chin-up','Lat pulldown','Barbell row','Dumbbell row','Seated cable row','T-bar row','Straight-arm pulldown'],
+Shoulders:['Overhead press','Dumbbell shoulder press','Arnold press','Lateral raise','Rear delt fly','Face pull','Upright row'],
+Biceps:['Barbell curl','Dumbbell curl','Hammer curl','Preacher curl','Cable curl'],
+Triceps:['Triceps pushdown','Skull crusher','Overhead triceps extension','Close-grip bench press','Dips'],
+Quads:['Squat','Front squat','Leg press','Leg extension','Lunge','Bulgarian split squat','Hack squat'],
+Hamstrings:['Romanian deadlift','Leg curl','Good morning'],
+Glutes:['Hip thrust','Glute bridge','Cable kickback'],
+Calves:['Standing calf raise','Seated calf raise'],
+Core:['Plank','Hanging leg raise','Cable crunch','Ab wheel','Russian twist'],
+Forearms:['Wrist curl',"Farmer's carry"]};
+const MUSCLES=[...Object.keys(LIB),'Other'];
+const BUILTIN=Object.entries(LIB).flatMap(([m,l])=>l.map(name=>({name,muscle:m})));
+const $=id=>document.getElementById(id),lc=s=>String(s||'').trim().toLowerCase();
+function norm(d){d=d&&typeof d==='object'?d:{};const arr=a=>Array.isArray(a)?a:[];
+ return{version:2,lastBackup:d.lastBackup||null,
+  workouts:arr(d.workouts).filter(w=>w&&Array.isArray(w.exercises)&&w.exercises.every(e=>e&&Array.isArray(e.sets))),
+  templates:arr(d.templates).filter(t=>t&&Array.isArray(t.exercises)),
+  custom:arr(d.custom).filter(c=>c&&c.name).map(c=>({name:String(c.name),muscle:MUSCLES.includes(c.muscle)?c.muscle:'Other'}))}}
+let db;try{db=norm(JSON.parse(localStorage.getItem(KEY)))}catch(e){db=norm(null)}
+let current=null,pmode='ex',pm='All',lm='All',pres=[];
+$('today').textContent=new Date().toLocaleDateString(undefined,{month:'short',day:'numeric'});
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){toast('Could not save — storage full?')}}
+function toast(t){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').style.display='none',1900)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.screen===id));
+ ({home:renderHome,history:renderHistory,progress:renderProgress,library:renderLibrary,templates:renderTemplates})[id]?.();window.scrollTo(0,0)}
+
+/* ---------- exercise library ---------- */
+function allEx(){const c=db.custom.map(x=>({...x,custom:true})),names=new Set(c.map(x=>lc(x.name)));return[...c,...BUILTIN.filter(x=>!names.has(lc(x.name)))].sort((a,b)=>a.name.localeCompare(b.name))}
+function muscleOf(name){return(allEx().find(x=>lc(x.name)===lc(name))||{}).muscle||'Other'}
+function find(q,m){return allEx().filter(x=>(m==='All'||x.muscle===m)&&lc(x.name).includes(lc(q)))}
+function chips(sel,fn){return['All',...MUSCLES].map(m=>`<button class="chip ${m===sel?'on':''}" onclick="${fn}('${m}')">${m}</button>`).join('')}
+function muscleOpts(){return MUSCLES.map(m=>`<option>${m}</option>`).join('')}
+function addCustom(name,muscle){name=name.trim();if(!name)return false;const i=db.custom.findIndex(c=>lc(c.name)===lc(name));if(i>=0)db.custom[i].muscle=muscle;else db.custom.push({name,muscle});persist();return true}
+function saveCustom(){const n=$('cName').value.trim();if(!n){toast('Enter a name');return}
+ if(BUILTIN.some(x=>lc(x.name)===lc(n))&&!db.custom.some(c=>lc(c.name)===lc(n))){toast('Already in the library');return}
+ addCustom(n,$('cMuscle').value);$('cName').value='';renderLibrary();toast('Exercise saved')}
+function delCustom(i){if(confirm('Remove this custom exercise? Logged workouts keep their data.')){db.custom.splice(i,1);persist();renderLibrary()}}
+function setLM(m){lm=m;renderLibrary()}function setPM(m){pm=m;renderPicker()}
+function renderLibrary(){$('cMuscle').innerHTML=muscleOpts();$('lchips').innerHTML=chips(lm,'setLM');const r=find($('lq').value,lm);
+ $('libList').innerHTML=r.map(x=>{const ci=db.custom.findIndex(c=>lc(c.name)===lc(x.name));return`<div class="listitem row"><span>${esc(x.name)}</span><span class="row"><span class="pill">${esc(x.muscle)}${x.custom?' · custom':''}</span>${x.custom?`<button class="ghost" onclick="delCustom(${ci})">✕</button>`:''}</span></div>`}).join('')||'<div class="empty">No matches. Add it as a custom exercise above.</div>'}
+
+/* ---------- picker (exercises / templates) ---------- */
+function openPicker(mode){pmode=mode;pm='All';$('pq').value='';$('picker').classList.add('open');renderPicker()}
+function closePicker(){$('picker').classList.remove('open')}
+function renderPicker(){const box=$('plist'),isT=pmode==='tpl';$('pq').style.display=$('pchips').style.display=isT?'none':'';$('ptitle').textContent=isT?'Choose template':'Add exercise';
+ if(isT){box.innerHTML=db.templates.map((t,i)=>`<button class="pick" onclick="pickTpl(${i})"><span>${esc(t.name)}</span><span class="muted small">${t.exercises.length} exercises</span></button>`).join('');return}
+ $('pchips').innerHTML=chips(pm,'setPM');const q=$('pq').value.trim();pres=find(q,pm);
+ box.innerHTML=pres.map((x,i)=>`<button class="pick" onclick="pickEx(${i})"><span>${esc(x.name)}</span><span class="pill">${esc(x.muscle)}</span></button>`).join('');
+ if(q&&!pres.some(x=>lc(x.name)===lc(q)))box.innerHTML+=`<div class="card"><div class="muted small">Not in the library?</div><div class="grid2" style="margin-top:8px"><select id="newMuscle">${muscleOpts()}</select><button class="blue" onclick="createFromPicker()">Create “${esc(q)}”</button></div></div>`}
+function pickEx(i){addExercise(pres[i].name);closePicker()}
+function pickTpl(i){db.templates[i].exercises.forEach(addExercise);closePicker()}
+function createFromPicker(){const n=$('pq').value.trim();addCustom(n,$('newMuscle').value);addExercise(n);closePicker()}
+
+/* ---------- workout editor ---------- */
+function lastSets(name){for(const w of db.workouts){const e=w.exercises.find(e=>lc(e.name)===lc(name));if(e&&e.sets.length)return e.sets}return null}
+function newWorkout(name='',exs=[]){current={id:Date.now(),date:new Date().toISOString(),name,exercises:exs};$('sessionName').value=name;$('workoutDate').textContent=new Date().toLocaleString();$('workoutTitle').textContent='New workout';renderExercises();show('workout')}
+function addExercise(name){if(!current)return;current.exercises.push({name,sets:[{weight:'',reps:''}]});renderExercises()}
+function exitWorkout(){if(current&&current.exercises.length&&!confirm('Discard this workout?'))return;current=null;show('home')}
+function addFromTemplate(){if(!db.templates.length){toast('Create a template first');return}if(db.templates.length===1)pickTpl(0);else openPicker('tpl')}
+function renderExercises(){const list=$('exerciseList');list.innerHTML='';
+ if(!current.exercises.length)list.innerHTML='<div class="empty">Tap “Add exercise” to get started.</div>';
+ current.exercises.forEach((ex,i)=>{const prev=lastSets(ex.name),el=document.createElement('div');el.className='exercise';
+  el.innerHTML=`<div class="row"><div><strong>${esc(ex.name)}</strong> <span class="pill">${esc(muscleOf(ex.name))}</span></div><button class="ghost">Remove</button></div>`+
+   (prev?`<div class="hint"><span>Last time: ${prev.map(s=>`${s.weight}×${s.reps}`).join(' · ')}</span><button>Copy</button></div>`:'')+
+   `<div class="setrows"></div><button class="secondary full" style="margin-top:10px">＋ Add set</button>`;
+  const b=el.querySelectorAll(':scope > .row > button, :scope > .hint > button, :scope > button');
+  b[0].onclick=()=>{current.exercises.splice(i,1);renderExercises()};
+  if(prev){b[1].onclick=()=>{ex.sets=prev.map(s=>({weight:s.weight,reps:s.reps}));renderExercises()}}
+  b[b.length-1].onclick=()=>{ex.sets.push({weight:'',reps:''});renderExercises()};
+  const rows=el.querySelector('.setrows');
+  ex.sets.forEach((s,j)=>{const p=prev&&prev[j],r=document.createElement('div');r.className='setrow';
+   r.innerHTML=`<span class="num">${j+1}</span><input type="number" min="0" step="0.5" placeholder="${p?p.weight:'kg'}" value="${esc(s.weight)}" aria-label="Weight in kg"><input type="number" min="0" placeholder="${p?p.reps:'reps'}" value="${esc(s.reps)}" aria-label="Reps"><button title="Remove set">×</button>`;
+   r.children[1].oninput=e=>s.weight=e.target.value;r.children[2].oninput=e=>s.reps=e.target.value;
+   r.children[3].onclick=()=>{ex.sets.splice(j,1);if(!ex.sets.length)ex.sets.push({weight:'',reps:''});renderExercises()};rows.appendChild(r)});
+  list.appendChild(el)})}
+function saveWorkout(){current.name=$('sessionName').value.trim()||'Workout';
+ current.exercises=current.exercises.filter(e=>e.name.trim()).map(e=>({name:e.name,sets:e.sets.filter(s=>s.reps!==''||s.weight!=='').map(s=>({weight:Number(s.weight)||0,reps:Number(s.reps)||0}))})).filter(e=>e.sets.length);
+ if(!current.exercises.length){toast('Add at least one exercise and set');return}
+ db.workouts.unshift(current);persist();current=null;toast('Workout saved');show('home')}
+function duplicate(i){const w=db.workouts[i];if(!w)return;newWorkout(w.name,w.exercises.map(e=>({name:e.name,sets:e.sets.map(s=>({weight:s.weight,reps:s.reps}))})));toast('Duplicated — adjust and save')}
+
+/* ---------- home / history / templates ---------- */
+function renderHome(){const wk=new Date();wk.setDate(wk.getDate()-7);
+ $('weekCount').textContent=db.workouts.filter(w=>new Date(w.date)>=wk).length;$('totalCount').textContent=db.workouts.length;$('exerciseCount').textContent=db.workouts.reduce((a,w)=>a+w.exercises.length,0);
+ $('repeatBtn').style.display=db.workouts.length?'':'none';
+ $('recent').innerHTML=db.workouts.slice(0,3).map(w=>`<div class="listitem"><div class="row"><strong>${esc(w.name)}</strong><span class="pill">${new Date(w.date).toLocaleDateString()}</span></div><div class="muted small">${w.exercises.map(e=>esc(e.name)).join(' · ')}</div></div>`).join('')||'<div class="empty">No workouts yet. Your first session starts here.</div>';
+ $('homeTemplates').innerHTML=db.templates.slice(0,2).map(t=>`<div class="listitem"><strong>${esc(t.name)}</strong><div class="muted small">${t.exercises.map(esc).join(' · ')}</div></div>`).join('')||'<div class="muted small">Save a routine to get started.</div>';
+ $('backupInfo').textContent=db.lastBackup?'Last backup: '+new Date(db.lastBackup).toLocaleDateString():'Your data lives only on this device. Download a backup now and then.'}
+function renderHistory(){$('historyList').innerHTML=db.workouts.map((w,i)=>`<div class="listitem"><div class="row"><strong>${esc(w.name)}</strong><span><button class="ghost" onclick="duplicate(${i})">Duplicate</button><button class="ghost" onclick="deleteWorkout(${i})">Delete</button></span></div><div class="muted small">${new Date(w.date).toLocaleString()} · ${w.exercises.length} exercises</div>${w.exercises.map(e=>`<div style="margin-top:9px"><strong>${esc(e.name)}</strong><div class="muted small">${e.sets.map(s=>`${s.weight} kg × ${s.reps}`).join('　·　')}</div></div>`).join('')}</div>`).join('')||'<div class="empty">Your saved workouts will appear here.</div>'}
 function deleteWorkout(i){if(confirm('Delete this workout?')){db.workouts.splice(i,1);persist();renderHistory();renderHome()}}
-function saveTemplate(){let name=$('templateName').value.trim(),exercises=$('templateExercises').value.split(',').map(s=>s.trim()).filter(Boolean);if(!name||!exercises.length){toast('Add a name and at least one exercise');return}db.templates.push({id:Date.now(),name,exercises});persist();$('templateName').value='';$('templateExercises').value='';renderTemplates();toast('Template saved')}
+function saveTemplate(){const name=$('templateName').value.trim(),exercises=$('templateExercises').value.split(',').map(s=>s.trim()).filter(Boolean);if(!name||!exercises.length){toast('Add a name and at least one exercise');return}
+ db.templates.push({id:Date.now(),name,exercises});persist();$('templateName').value='';$('templateExercises').value='';renderTemplates();toast('Template saved')}
 function renderTemplates(){$('templateList').innerHTML=db.templates.map((t,i)=>`<div class="listitem"><div class="row"><strong>${esc(t.name)}</strong><button class="ghost" onclick="deleteTemplate(${i})">Delete</button></div><div class="muted small">${t.exercises.map(esc).join(' · ')}</div><button class="secondary" style="margin-top:10px" onclick="startTemplate(${i})">Start this workout</button></div>`).join('')||'<div class="empty">No templates yet. Create your first routine above.</div>'}
 function deleteTemplate(i){db.templates.splice(i,1);persist();renderTemplates()}
-function startTemplate(i){newWorkout();$('sessionName').value=db.templates[i].name;current.exercises=[];db.templates[i].exercises.forEach(n=>addExercise(n));}
-function renderProgress(){let names=[...new Set(db.workouts.flatMap(w=>w.exercises.map(e=>e.name)))];let sel=$('progressExercise'),old=sel.value;sel.innerHTML=names.map(n=>`<option>${esc(n)}</option>`).join('');if(old&&names.includes(old))sel.value=old;let name=sel.value,records=[];db.workouts.slice().reverse().forEach(w=>w.exercises.filter(e=>e.name===name).forEach(e=>e.sets.forEach(s=>records.push({date:new Date(w.date),weight:s.weight,reps:s.reps}))));$('progressContent').innerHTML=records.length?`<div class="stats"><div class="stat"><strong>${Math.max(...records.map(r=>r.weight))}</strong><span>BEST KG</span></div><div class="stat"><strong>${records[records.length-1].weight}</strong><span>LATEST KG</span></div><div class="stat"><strong>${Math.max(...records.map(r=>r.reps))}</strong><span>MAX REPS</span></div></div>`:'<div class="empty">Log an exercise to see its progress.</div>';let vols=db.workouts.slice(-8).map(w=>({name:new Date(w.date).toLocaleDateString(undefined,{month:'short',day:'numeric'}),v:w.exercises.reduce((a,e)=>a+e.sets.reduce((b,s)=>b+s.weight*s.reps,0),0)}));let max=Math.max(1,...vols.map(x=>x.v));$('volumeContent').innerHTML=vols.map(x=>`<div style="margin:13px 0"><div class="row small"><span>${x.name}</span><span>${Math.round(x.v).toLocaleString()} kg·reps</span></div><div class="barwrap"><div class="bar" style="width:${x.v/max*100}%"></div></div></div>`).join('')||'<div class="empty">Save workouts to see training volume.</div>'}
+function startTemplate(i){const t=db.templates[i];newWorkout(t.name,t.exercises.map(n=>({name:n,sets:[{weight:'',reps:''}]})))}
+
+/* ---------- progress + volume by muscle ---------- */
+function renderProgress(){const seen={};db.workouts.forEach(w=>w.exercises.forEach(e=>{seen[lc(e.name)]=seen[lc(e.name)]||e.name}));
+ const names=Object.values(seen).sort(),sel=$('progressExercise'),old=sel.value;sel.innerHTML=names.map(n=>`<option>${esc(n)}</option>`).join('');if(names.includes(old))sel.value=old;
+ const k=lc(sel.value),rec=[];db.workouts.slice().reverse().forEach(w=>w.exercises.filter(e=>lc(e.name)===k).forEach(e=>e.sets.forEach(s=>rec.push(s))));
+ $('progressContent').innerHTML=rec.length?`<div class="stats"><div class="stat"><strong>${Math.max(...rec.map(r=>r.weight))}</strong><span>BEST KG</span></div><div class="stat"><strong>${rec[rec.length-1].weight}</strong><span>LATEST KG</span></div><div class="stat"><strong>${Math.max(...rec.map(r=>r.reps))}</strong><span>MAX REPS</span></div></div>`:'<div class="empty">Log an exercise to see its progress.</div>';
+ renderVolume()}
+function renderVolume(){const days=+$('volRange').value,cut=days?Date.now()-days*864e5:0,t={};
+ db.workouts.forEach(w=>{if(new Date(w.date)>=cut)w.exercises.forEach(e=>{const m=muscleOf(e.name),o=t[m]=t[m]||{v:0,s:0};o.s+=e.sets.length;o.v+=e.sets.reduce((a,s)=>a+s.weight*s.reps,0)})});
+ const rows=Object.entries(t).sort((a,b)=>b[1].v-a[1].v||b[1].s-a[1].s),max=Math.max(1,...rows.map(r=>r[1].v));
+ $('volumeContent').innerHTML=rows.map(([m,o])=>`<div style="margin:13px 0"><div class="row small"><span>${esc(m)} <span class="muted">· ${o.s} sets</span></span><span>${Math.round(o.v).toLocaleString()} kg·reps</span></div><div class="barwrap"><div class="bar" style="width:${o.v/max*100}%"></div></div></div>`).join('')||'<div class="empty">No workouts in this period.</div>'}
+
+/* ---------- backup / restore ---------- */
+function backup(){db.lastBackup=new Date().toISOString();persist();
+ const b=new Blob([JSON.stringify({app:'liftlog',...db},null,2)],{type:'application/json'}),a=document.createElement('a');
+ a.href=URL.createObjectURL(b);a.download='liftlog-backup-'+db.lastBackup.slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000);renderHome();toast('Backup downloaded')}
+function restore(f){if(!f)return;const r=new FileReader();
+ r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!Array.isArray(d.workouts))throw 0;const n=norm(d);
+  if(!confirm(`Replace everything on this device with this backup (${n.workouts.length} workouts, ${n.templates.length} templates)? This can't be undone.`))return;
+  db=n;db.workouts.sort((a,b)=>new Date(b.date)-new Date(a.date));persist();show('home');toast('Backup restored')}catch(e){toast('Not a valid Lift Log backup')}};
+ r.onloadend=()=>{$('restoreFile').value=''};r.readAsText(f)}
+
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 renderHome();
 </script>
